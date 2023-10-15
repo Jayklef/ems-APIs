@@ -5,8 +5,8 @@ import com.jayklef.emsbackend.entity.Employee;
 import com.jayklef.emsbackend.mapper.EmployeeMapper;
 import com.jayklef.emsbackend.repository.EmployeeRepository;
 import com.jayklef.emsbackend.service.EmployeeService;
+import com.jayklef.emsbackend.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,5 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
 
         return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
+
+    @Override
+    public EmployeeDto getEmployeeById(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(()-> new ResourceNotFoundException("Resource with id of " + employeeId + " not found")
+        );
+        return EmployeeMapper.mapToEmployeeDto(employee);
     }
 }
