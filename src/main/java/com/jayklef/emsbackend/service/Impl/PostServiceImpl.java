@@ -10,9 +10,12 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private RestTemplate restTemplate;
-    
-    @Override
-    public void getAllPosts() {
 
+    @Override
+    public String getAllPosts() {
+        String allPosts = restTemplate.getForObject("https://jsonplaceholder.typicode.com/posts", String.class);
+        System.out.println(allPosts);
+
+        return allPosts;
     }
 }
