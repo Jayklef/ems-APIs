@@ -1,5 +1,6 @@
 package com.jayklef.emsbackend.controller;
 
+import com.jayklef.emsbackend.dto.PostDto;
 import com.jayklef.emsbackend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,8 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("")
-    public String getAllPosts(){
-        String response = postService.getAllPosts();
+    public PostDto[] getAllPosts(){
+        PostDto[] response = postService.getAllPosts();
         return response;
     }
 }

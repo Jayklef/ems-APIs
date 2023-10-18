@@ -1,6 +1,8 @@
 package com.jayklef.emsbackend.service;
 
+import com.jayklef.emsbackend.dto.PostDto;
+
 public interface PostService {
 
-     public String getAllPosts();
+     public PostDto[] getAllPosts();
 }
