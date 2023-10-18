@@ -4,6 +4,7 @@ import com.jayklef.emsbackend.dto.PostDto;
 import com.jayklef.emsbackend.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,5 +22,22 @@ public class PostServiceImpl implements PostService {
         System.out.println(allPosts);
 
         return allPosts;
+    }
+
+    @Override
+    public PostDto createPost(PostDto postDto){
+
+        PostDto post = null;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<PostDto> httpEntity = new HttpEntity<>(postDto, headers);
+
+        ResponseEntity<PostDto> newPost = restTemplate.postForEntity(ApiBaseUrl+"/posts", httpEntity,
+                PostDto.class);
+
+        if (newPost.getStatusCode() == HttpStatus.CREATED){
+            post = newPost.getBody();
+        }
+    return post;
     }
 }
