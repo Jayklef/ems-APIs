@@ -40,4 +40,19 @@ public class PostServiceImpl implements PostService {
         }
     return post;
     }
+
+    @Override
+    public PostDto updatePost(Long id, PostDto postDto) {
+        PostDto post = null;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<PostDto> httpEntity = new HttpEntity<>(postDto, headers);
+
+        ResponseEntity<PostDto> updatedPost = restTemplate.exchange(ApiBaseUrl+"/posts/{id}",
+                HttpMethod.PUT, httpEntity, PostDto.class);
+        if (updatedPost.getStatusCode() == HttpStatus.OK){
+            post = updatedPost.getBody();
+        }
+        return post;
+    }
 }
