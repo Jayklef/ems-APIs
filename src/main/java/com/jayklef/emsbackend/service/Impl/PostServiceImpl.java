@@ -55,4 +55,9 @@ public class PostServiceImpl implements PostService {
         }
         return post;
     }
+
+    @Override
+    public void deletePost(Long id) {
+        restTemplate.delete(ApiBaseUrl+"/delete/{id}", id);
+    }
 }
