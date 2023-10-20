@@ -2,7 +2,6 @@ package com.jayklef.emsbackend.service.Impl;
 
 import com.jayklef.emsbackend.dto.PostDto;
 import com.jayklef.emsbackend.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -13,8 +12,13 @@ public class PostServiceImpl implements PostService {
 
     @Value("${external.api.url}")
     private String ApiBaseUrl;
-    @Autowired
+
+
     private RestTemplate restTemplate;
+
+    public PostServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public PostDto[] getAllPosts() {
@@ -27,7 +31,15 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto getAllPostsByUserId(Long userId) {
         PostDto[] posts = restTemplate.getForObject(ApiBaseUrl+"/posts", PostDto[].class);
-        return posts;
+
+       // https://jsonplaceholder.typicode.com/users/3/posts
+
+        for (PostDto model : posts){
+            restTemplate.getForObject(ApiBaseUrl+"/users"+ userId+ "/posts", PostDto[].class);
+            return model;
+        }
+
+        return null;
     }
 
     @Override
