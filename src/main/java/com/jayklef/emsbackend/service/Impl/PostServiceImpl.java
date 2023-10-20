@@ -25,6 +25,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public PostDto getAllPostsByUserId(Long userId) {
+        PostDto[] posts = restTemplate.getForObject(ApiBaseUrl+"/posts", PostDto[].class);
+        return posts;
+    }
+
+    @Override
     public PostDto createPost(PostDto postDto){
 
         PostDto post = null;

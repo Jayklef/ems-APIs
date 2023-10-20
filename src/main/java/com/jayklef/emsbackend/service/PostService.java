@@ -4,7 +4,9 @@ import com.jayklef.emsbackend.dto.PostDto;
 
 public interface PostService {
 
-     public PostDto[] getAllPosts();
+     PostDto[] getAllPosts();
+
+     PostDto getAllPostsByUserId(Long userId);
 
      PostDto createPost(PostDto postDto);
 
